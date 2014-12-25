@@ -1,0 +1,44 @@
+===========================================================================
+    The package is serial function of ALLIS.
+    It's include tcp server tcp_client udp client/server and test function.
+    Use Select design.
+===========================================================================    
+auto_send       It's random auto send "A-Z" "a-z" "0-9" data by console.
+                Baudrate 57600.
+                Example :  auto_send /dev/ttyUSB0 .
+
+client          It's test function Tcp client and print message from tcp server.
+                Example : client server_ip server_port . 
+
+server          It's test function Tcp server and print message from tcp client.
+                Listen port 1234.
+                Example : server .
+
+con_test.c      It's test function Console Reader. Read and print message by
+                console. Send command to console.  
+                Example : con_test /dev/ttyUSB0 .
+
+udp_client.c    It's test function Udp Client and print message from udp
+                server.
+                Example : udp_client server_ip server_port .
+
+udp_server.c    It's test function Udp server and print message from udp
+                client.
+                Example : udp_server listen_port .
+
+main.c          It's ALLIS main function.
+                Include : 
+                    configure.c     Get paramter from configure file.
+                    serial.h        
+                    socket.c        Tcp client socket function.
+                    tcp_client.c    Tcp client soekct write/read function.
+                    tcp_server.c    Tcp server socket function.
+                    tcp_states.h
+                    uart.c          Serial setting function.
+                    udp.h
+                    udp_mode.c      Udp server/cleint function.
+
+                                        
+serial.c        It's serial sample code.
+
+ 

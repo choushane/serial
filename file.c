@@ -204,6 +204,7 @@ void save_file(char *file, int len, char *dir)
     FILE *fp = NULL;
     int garbage,file_num;
     char path[NAME_LEN] = {0};
+    char data[NAME_LEN] = {0};
 
 #if DEBUG
     printf("Enter file mode!!\n");
@@ -251,7 +252,7 @@ void save_file(char *file, int len, char *dir)
 
 #if DEBUG
     printf("File path : %s !!\n",file_path);
-#endif       
+#endif
 
     fp = fopen(file_path,"a"); 
 

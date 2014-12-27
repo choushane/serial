@@ -185,12 +185,9 @@ int main( int argc, char **argv )
             Rx+=len;
 
             if(len > (1024 * 500000)) len = 0;
-            sprintf(path,"/tmp/%s-Rx",dir);
-            fp = fopen(path,"w");
-            if (fp){
-                fprintf(fp,"%d",Rx);
-                fclose(fp);
-            }
+
+            sprintf(path,"echo %d > /tmp/%s-Rx",len,dir );
+            command(path);
 
             if(file_mode > 0)
                 save_file(buf,len,dir);

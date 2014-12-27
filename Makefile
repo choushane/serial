@@ -11,4 +11,4 @@ con_test: con_test.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 clean:
-	rm -f *.o serial con_test UART $(all)
+	rm -f *.o con_test UART $(all)

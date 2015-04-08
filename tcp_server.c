@@ -11,7 +11,7 @@
 const char *error_max_user = "Too many User!!\n";
 
 int user = 0;
-const char *ISP[]={"","isp1","isp2","isp3","isp4"};
+const char *ISP[]={"isp1","isp2","isp3","isp4"};
 
 int open_server (unsigned short int server_port)
 {
@@ -104,28 +104,38 @@ void user_connect (int server)
     char *group = NULL;
 
     char path[1024]={0};
+    int y = 0,x = 0;
 
     group = get_conf("group");
+    x = accept( server , (struct sockaddr*)&caddr , &addr_len );
+    if (!strcmp(inet_ntoa(caddr.sin_addr),"0.0.0.0")){;user--;return;}
 
-    user++;
-    gl_ip_pid[user] = accept( server , (struct sockaddr*)&caddr , &addr_len );
-    if (!strcmp(inet_ntoa(caddr.sin_addr),"0.0.0.0")){user--;return;}
+    for (y = 0; y < set_max_user;y++ )
+    {
+#ifdef DEBUG
+        printf("Y : %d  C : %d\n",y,gl_ip_pid[y]);
+#endif
+        if(gl_ip_pid[y] > 0 ) continue;
+        gl_ip_pid[y] = x;
+        break;
+    }    
     if( user > set_max_user ){
 #ifdef DEBUG
         printf("Add Uers fail !!\nUser Number : %d  Max User : %d\n",user,set_max_user);
 #endif
-        write( gl_ip_pid[user] , error_max_user , strlen(error_max_user));
-        close(gl_ip_pid[user]);
-        gl_ip_pid[user] = -1;
+        write( gl_ip_pid[y] , error_max_user , strlen(error_max_user));
+        close(gl_ip_pid[y]);
+        gl_ip_pid[y] = -1;
 
-        sprintf(path,"nvram replace attr als_status_rule %s %s 1",group,ISP[user]);
-        command(path);
+        //sprintf(path,"nvram replace attr als_status_rule %s %s 1",group,ISP[user]);
+        //command(path);
         user--;
     }else{
-        sprintf(path,"nvram replace attr als_status_rule %s %s %s",group,ISP[user], inet_ntoa(caddr.sin_addr));
-        command(path);
+            sprintf(path,"nvram replace attr als_status_rule %s %s %s",group,ISP[y], inet_ntoa(caddr.sin_addr));
+            printf("%s\n",path);
+            command(path);
 #ifdef DEBUG
-        printf("User : %d cnnect from : %s : %d  pid : %d\n",user,inet_ntoa(caddr.sin_addr),ntohs(caddr.sin_port),gl_ip_pid[user]);
+        printf("User : %d cnnect from : %s : %d  pid : %d\n",y,inet_ntoa(caddr.sin_addr),ntohs(caddr.sin_port),gl_ip_pid[user]);
 #endif                
                 
     }

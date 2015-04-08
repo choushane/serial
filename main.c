@@ -12,7 +12,7 @@
 #include "serial.h"
 #include "udp.h"
 
-int gl_ip_pid[MAX_USER] = {-1};
+int gl_ip_pid[MAX_USER] = {-1,-1,-1,-1,-1,-1};
 int set_max_user = 4;
 unsigned long Rx = 0;
 unsigned long Tx = 0;
@@ -160,7 +160,7 @@ int main( int argc, char **argv )
                     printf("User : %d [ %d ]  Disconnect !!\n",y,gl_ip_pid[y]);
 #endif
                     close(gl_ip_pid[y]);
-                    sprintf(path,"nvram replace attr als_status_rule %s %s 1",group,ISP[user]);
+                    sprintf(path,"nvram replace attr als_status_rule %s %s 1",group,ISP[y]);
                     command(path);
                     gl_ip_pid[y] = -1;
                     user--;
@@ -171,7 +171,7 @@ int main( int argc, char **argv )
             }
         }
 
-        if( mode != 2 && change )user_del();
+        //if( mode != 2 && change )user_del();
 
         if(!select(maxfd+1, &fds, NULL, NULL, NULL)) continue; 
 
@@ -184,9 +184,9 @@ int main( int argc, char **argv )
             count++;
             Rx+=len;
 
-            if(len > (1024 * 500000)) len = 0;
+            if(Rx > (1024 * 500000)) Rx = 0;
 
-            sprintf(path,"echo %d > /tmp/%s-Rx",len,dir );
+            sprintf(path,"echo %d > /tmp/%s-Rx",Rx,dir );
             command(path);
 
             if(file_mode > 0)

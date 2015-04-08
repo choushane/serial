@@ -24,22 +24,6 @@ void read_data(int fd)
 
     buf[res] = 0;
 
-/*    
-    mode = atoi(get_conf("mode"));
-   
-    switch (mode)
-    {
-        case 1:
-            for(i = 0;i < 4; i++)
-            {   
-                if(gl_ip_pid[i] > 0) 
-                    send(gl_ip_pid[i] ,buf, strlen(buf),0);
-            }
-            break;
-        default:
-            break;
-    }
-    */
 }
 
 void write_data(char *data,int len)
@@ -69,5 +53,5 @@ void write_data(char *data,int len)
         }
         write(gl_ip_pid[x],data,len);
     }
-    user_del();
+    //user_del();
 }

@@ -8,10 +8,13 @@
 #include <sys/types.h>
 
 #include "serial.h"
+
 const char *sd_storage = "/tmp/mnt/SD";
 const char *usb_storage = "/tmp/mnt/USB";
 int digital = 0;
 int check_time = 0;
+int sd_size = 0;
+int usb_size = 0;
 extern int sd_enable;
 extern int usb_enable;
 extern int record;
@@ -20,9 +23,11 @@ int check_size(const char * file_dir)
 {
     struct statvfs buf;
     int total,used;
+
 #if DEBUG
     printf("check_size [ %s ]\n",file_dir);
 #endif       
+
     if ( statvfs(file_dir,&buf) < 0 )
     {
 #if DEBUG
@@ -62,6 +67,8 @@ int detect_storage(const char * file_dir)
     }
 
     closedir(dir);
+
+    
 #if DEBUG
     printf("Storage success!!\n");
 #endif       
@@ -108,7 +115,7 @@ int scan_file(const char *file_dir,int del)
                         sprintf(path,"%s/%s",file_dir,namelist[i]->d_name);
                         remove(path);
                     }
-                    fin_num = atoi(num);
+		    fin_num = MAXNO(fin_num,atoi(num));
                 }
             }
             free(namelist[i]); 
@@ -141,22 +148,16 @@ int find_digital(char *dir)
        usb_num = scan_file(path,0);
     }
    
-    digital = MAXNO(sd_num,usb_num);
-    return digital;
+    return MAXNO(sd_num,usb_num);
 }
 
 int check_digital(char *file_dir)
 {
-    int garbage;
     int now_time = time_number();
-    if(digital <= 0 ){
-#if DEBUG
-    printf("Digital fail!!\n");
-#endif       
-        garbage = find_digital(file_dir);
-    }
 
-    if (check_time != now_time )
+    digital = MAXNO(find_digital(file_dir),digital);
+
+    if ( check_time == 0 || check_time != now_time )
     {
         check_time = now_time;
         return digital++;
@@ -204,7 +205,6 @@ void save_file(char *file, int len, char *dir)
     FILE *fp = NULL;
     int garbage,file_num;
     char path[NAME_LEN] = {0};
-    char data[NAME_LEN] = {0};
 
 #if DEBUG
     printf("Enter file mode!!\n");
@@ -219,27 +219,63 @@ void save_file(char *file, int len, char *dir)
         return;
     }
     memset(storage, 0, sizeof(storage));
-    if ( sd_enable && detect_storage(sd_storage) && (check_size(sd_storage) < 95 || record)){
-#if DEBUG
-    printf("Detect SD!!\n");
-#endif       
-        if(check_size(sd_storage) >= 95 && record )
-        {
-            sprintf(path,"%s/%s",sd_storage,dir); 
-            scan_file(path,1);
-        }
-        strcpy(storage , sd_storage );
-    }else if ( usb_enable && detect_storage(usb_storage) && (check_size(usb_storage) < 95 || record)){
+    if ( usb_enable && detect_storage(usb_storage)){
 #if DEBUG
     printf("Detect USB!!\n");
 #endif       
-        if(check_size(usb_storage) >= 95 && record )
+        if(record == 1 && check_size(usb_storage) >= 94)
         {
             sprintf(path,"%s/%s",usb_storage,dir); 
             scan_file(path,1);
+            strcpy(storage , usb_storage );
         }
-        strcpy(storage , usb_storage );
-    }else
+
+        if (check_size(usb_storage) >= 95){
+	    if(usb_size == 0)
+	    {
+                system("/bin/sh /etc/init.d/send_mail USB Size_over");
+	        usb_size = 1;
+	    }
+        }else{
+	    if(usb_size == 1)
+	    {
+                system("nvram replace attr alert_rule 0 usb 0");
+	        usb_size = 0;
+	    }
+        }
+
+        if (record == 1 || check_size(usb_storage) < 95)
+           strcpy(storage , usb_storage );
+    }
+    if ( sd_enable && detect_storage(sd_storage) ){
+#if DEBUG
+    printf("Detect SD!!\n");
+#endif       
+        if(record == 1 && check_size(sd_storage) >= 94)
+        {
+            sprintf(path,"%s/%s",sd_storage,dir); 
+            scan_file(path,1);
+            strcpy(storage , sd_storage );
+        }
+
+        if (check_size(sd_storage) >= 95){
+	    if(sd_size == 0)
+	    {
+                system("/bin/sh /etc/init.d/send_mail SD Size_over");
+	        sd_size = 1;
+	    }
+        }else{
+	    if(sd_size == 1)
+	    {
+            	system("nvram replace attr alert_rule 0 sd 0");
+	    	sd_size = 0;
+	    }
+        }
+
+        if (record == 1 || check_size(sd_storage) < 95)
+            strcpy(storage , sd_storage );
+    }
+    if (!storage)
     {
 #if DEBUG
     printf("NO detect any storage skip file mode!!\n");
@@ -258,7 +294,7 @@ void save_file(char *file, int len, char *dir)
 
     if(!fp){
 #if DEBUG
-    printf("Write file fail!!\n");
+        printf("Write file fail!!\n");
 #endif       
         free(storage);
         return;

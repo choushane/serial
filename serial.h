@@ -1,5 +1,5 @@
 #include <termios.h>
-#define BUF_LEN 3096
+#define BUF_LEN 8192
 #define DEVICE_NUM 5
 //#define DEBUG 1
 #define MAX_USER 20

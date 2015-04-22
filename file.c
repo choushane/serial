@@ -15,6 +15,7 @@ int digital = 0;
 int check_time = 0;
 int sd_size = 0;
 int usb_size = 0;
+char origin[1024]={0};
 extern int sd_enable;
 extern int usb_enable;
 extern int record;
@@ -78,7 +79,7 @@ int detect_storage(const char * file_dir)
 int scan_file(const char *file_dir,int del)
 {
     struct dirent **namelist = NULL;
-    int n,i = 1,fin_num = 0;
+    int n = 0, i = 1, fin_num = 0;
     char file_name[NAME_LEN] = {0};
     char num[NAME_LEN] = {0};
     char path[NAME_LEN] = {0};
@@ -115,7 +116,7 @@ int scan_file(const char *file_dir,int del)
                         sprintf(path,"%s/%s",file_dir,namelist[i]->d_name);
                         remove(path);
                     }
-		    fin_num = MAXNO(fin_num,atoi(num));
+		    fin_num = MAXNO(atoi(num),fin_num);
                 }
             }
             free(namelist[i]); 
@@ -151,14 +152,15 @@ int find_digital(char *dir)
     return MAXNO(sd_num,usb_num);
 }
 
-int check_digital(char *file_dir)
+int check_digital(char *file_dir,char *storage_path)
 {
     int now_time = time_number();
 
-    digital = MAXNO(find_digital(file_dir),digital);
+    //digital = MAXNO(find_digital(file_dir),digital);
 
-    if ( check_time == 0 || check_time != now_time )
+    if ( check_time == 0 || check_time != now_time || strcmp(storage_path,origin))
     {
+    	digital = MAXNO(find_digital(file_dir),digital);
         check_time = now_time;
         return digital++;
     }else{
@@ -180,7 +182,7 @@ int create_dir(char *path)
 
 int check_dir(char *storage_path,char *file_dir)
 {
-    char file_path[1024];
+    char file_path[1024]={0};
     int result = 0;
 
     sprintf(file_path,"%s/%s",storage_path,file_dir);
@@ -228,6 +230,7 @@ void save_file(char *file, int len, char *dir)
             sprintf(path,"%s/%s",usb_storage,dir); 
             scan_file(path,1);
             strcpy(storage , usb_storage );
+            strcpy(origin , usb_storage );
         }
 
         if (check_size(usb_storage) >= 95){
@@ -245,7 +248,10 @@ void save_file(char *file, int len, char *dir)
         }
 
         if (record == 1 || check_size(usb_storage) < 95)
-           strcpy(storage , usb_storage );
+        {
+	    strcpy(storage , usb_storage );
+            strcpy(origin , usb_storage );
+	}
     }
     if ( sd_enable && detect_storage(sd_storage) ){
 #if DEBUG
@@ -256,6 +262,7 @@ void save_file(char *file, int len, char *dir)
             sprintf(path,"%s/%s",sd_storage,dir); 
             scan_file(path,1);
             strcpy(storage , sd_storage );
+            strcpy(origin , sd_storage );
         }
 
         if (check_size(sd_storage) >= 95){
@@ -272,8 +279,10 @@ void save_file(char *file, int len, char *dir)
 	    }
         }
 
-        if (record == 1 || check_size(sd_storage) < 95)
+        if (record == 1 || check_size(sd_storage) < 95){
             strcpy(storage , sd_storage );
+            strcpy(origin , sd_storage );
+	}
     }
     if (!storage)
     {
@@ -284,7 +293,7 @@ void save_file(char *file, int len, char *dir)
         return;
     }
     
-    sprintf(file_path,"%s/%s/%010d.txt",storage,dir,check_digital(dir));
+    sprintf(file_path,"%s/%s/%010d.txt",storage,dir,check_digital(dir,storage));
 
 #if DEBUG
     printf("File path : %s !!\n",file_path);

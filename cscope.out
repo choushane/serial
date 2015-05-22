@@ -1,4 +1,4 @@
-cscope 15 $HOME/aximcom/QGenie/package/ezp-serial/src               0000564410
+cscope 15 /home/shane/aximcom/ALLIS/package/ezp-serial/src               0000565466
 	@commander.c
 
 1 
@@ -879,8 +879,6 @@ cÚ
 cÚf
  *
 	mÃxt
- = 
-NULL
 ;
 
 16 
@@ -1161,69 +1159,63 @@ li¡
 	~"£rŸl.h
 "
 
-11 cÚ¡ *
+12 cÚ¡ *
 	gsd_¡Üage
  = "/tmp/mnt/SD";
 
-12 cÚ¡ *
+13 cÚ¡ *
 	gusb_¡Üage
  = "/tmp/mnt/USB";
 
-13 
+14 
 	gdig™®
  = 0;
 
-14 
+15 
 	gcheck_time
  = 0;
 
-15 
+16 
+	gsd_size
+ = 0;
+
+17 
+	gusb_size
+ = 0;
+
+18 
+	gÜigš
+[1024]={0};
+
+19 
 sd_’abË
 ;
 
-16 
+20 
 usb_’abË
 ;
 
-17 
+21 
 »cÜd
 ;
 
-19 
+23 
 	$check_size
 (cÚ¡ * 
 fe_dœ
 )
 
-21 
+25 
 ¡©vfs
  
 buf
 ;
 
-22 
+26 
 tÙ®
 ,
 u£d
 ;
-
-23 #ià
-DEBUG
-
-
-24 
-	`´štf
-("check_siz[ % ]\n",
-fe_dœ
-);
-
-26 iàĞ
-	`¡©vfs
-(
-fe_dœ
-,&
-buf
-) < 0 )
 
 28 #ià
 DEBUG
@@ -1231,9 +1223,27 @@ DEBUG
 
 29 
 	`´štf
+("check_siz[ % ]\n",
+fe_dœ
+);
+
+32 iàĞ
+	`¡©vfs
+(
+fe_dœ
+,&
+buf
+) < 0 )
+
+34 #ià
+DEBUG
+
+
+35 
+	`´štf
 ("statvfs fail!!\n");
 
-33 
+39 
 u£d
  = (
 buf
@@ -1243,7 +1253,7 @@ f_blocks
 f_bä“
 );
 
-34 
+40 
 tÙ®
  = 
 buf
@@ -1251,11 +1261,11 @@ buf
 f_blocks
  ;
 
-35 #ià
+41 #ià
 DEBUG
 
 
-36 
+42 
 	`´štf
 ("check_sizu£ : %dÙ® : %d [ %d ]\n",
 u£d
@@ -1263,41 +1273,35 @@ u£d
 tÙ®
 ,( ( used * 100 ) /otal ));
 
-38  ( ( 
+44  ( ( 
 u£d
  * 100 ) / 
 tÙ®
  );
 
-40 
+46 
 	}
 }
 
-42 
+48 
 	$d‘eù_¡Üage
 (cÚ¡ * 
 fe_dœ
 )
 
-44 
+50 
 DIR
  *
 dœ
+ = 
+NULL
 ;
 
-46 ifĞ
+52 ifĞ
 fe_dœ
  =ğ
 NULL
  ){
-
-47 #ià
-DEBUG
-
-
-48 
-	`´štf
-("file_dir is NULL!!\n");
 
 53 #ià
 DEBUG
@@ -1305,11 +1309,19 @@ DEBUG
 
 54 
 	`´štf
+("file_dir is NULL!!\n");
+
+59 #ià
+DEBUG
+
+
+60 
+	`´štf
 ("d‘eù_¡Üag[ % ]\n",
 fe_dœ
 );
 
-57 iàĞĞ
+63 iàĞĞ
 dœ
  = 
 	`İ’dœ
@@ -1319,33 +1331,33 @@ fe_dœ
 NULL
 ){
 
-58 #ià
+64 #ià
 DEBUG
 
 
-59 
+65 
 	`´štf
 ("Open dir fail!!\n");
 
-64 
+70 
 	`şo£dœ
 (
 dœ
 );
 
-65 #ià
+73 #ià
 DEBUG
 
 
-66 
+74 
 	`´štf
 ("Storage success!!\n");
 
-69 
+77 
 	}
 }
 
-71 
+79 
 	$sÿn_fe
 (cÚ¡ *
 fe_dœ
@@ -1353,57 +1365,59 @@ fe_dœ
 d–
 )
 
-73 
+81 
 dœ’t
  **
 Çm–i¡
+ = 
+NULL
 ;
 
-74 
+82 
 n
-,
+ = 0, 
 i
- = 1,
+ = 1, 
 fš_num
  = 0;
 
-75 
+83 
 fe_Çme
 [
 NAME_LEN
-];
+] = {0};
 
-76 
+84 
 num
 [
 NAME_LEN
-];
+] = {0};
 
-77 
+85 
 ·th
 [
 NAME_LEN
-];
+] = {0};
 
-79 #ià
+87 #ià
 DEBUG
 
 
-80 
+88 
 	`´štf
 ("Enter scan_file!!\n");
 
-83 #ià
+91 #ià
 DEBUG
 
 
-84 
+92 
 	`´štf
 ("sÿn_f·th [ % ]!!\n",
 fe_dœ
 );
 
-87 
+95 
 n
  = 
 	`sÿndœ
@@ -1415,31 +1429,31 @@ fe_dœ
 ®phasÜt
 );
 
-88 ià(
+96 ià(
 n
  < 0 ){
 
-89 #ià
+97 #ià
 DEBUG
 
 
-90 
+98 
 	`´štf
 ("Dir isƒmpty!!\n");
 
-92 
+100 
 	`ä“
 (
 Çm–i¡
 );
 
-95 
+103 
 i
  < 
 n
 )
 
-97 
+105 
 	`¡rıy
 (
 fe_Çme
@@ -1451,13 +1465,13 @@ i
 d_Çme
 );
 
-98 ià(
+106 ià(
 	`¡¾’
 (
 fe_Çme
 ) == 14)
 
-100 
+108 
 	`ssÿnf
 (
 fe_Çme
@@ -1465,27 +1479,27 @@ fe_Çme
 num
 );
 
-101 ià(
+109 ià(
 	`¡¾’
 (
 num
 ) == 10)
 
-103 #ià
+111 #ià
 DEBUG
 
 
-104 
+112 
 	`´štf
 ("Fšd F[ %s.txˆ] !!\n",
 num
 );
 
-106 if(
+114 if(
 d–
 )
 
-108 
+116 
 	`¥rštf
 (
 ·th
@@ -1499,21 +1513,23 @@ i
 d_Çme
 );
 
-109 
+117 
 	`»move
 (
 ·th
 );
 
-111 
+119 
 fš_num
  = 
+	`MAXNO
+(
 	`©oi
 (
 num
-);
+),fin_num);
 
-114 
+122 
 	`ä“
 (
 Çm–i¡
@@ -1521,51 +1537,51 @@ num
 i
 ]);
 
-115 
+123 
 i
 ++;
 
-117 
+125 
 	`ä“
 (
 Çm–i¡
 );
 
-118 #ià
+126 #ià
 DEBUG
 
 
-119 
+127 
 	`´štf
 ("La¡ f[ %010d.txˆ] !!\n",
 fš_num
 );
 
-121  
+129  
 fš_num
 ;
 
-123 
+131 
 	}
 }
 
-125 
+133 
 	$fšd_dig™®
 (*
 dœ
 )
 
-127 
+135 
 sd_num
  = 0 , 
 usb_num
  = 0;
 
-128 
+136 
 ·th
-[1024];
+[1024] = {0};
 
-130 ià(
+138 ià(
 	`d‘eù_¡Üage
 (
 sd_¡Üage
@@ -1575,7 +1591,7 @@ sd_¡Üage
 dœ
 ) > 0)
 
-132 
+140 
 	`¥rštf
 (
 ·th
@@ -1585,7 +1601,7 @@ sd_¡Üage
 dœ
 );
 
-133 
+141 
 sd_num
  = 
 	`sÿn_fe
@@ -1593,13 +1609,13 @@ sd_num
 ·th
 ,0);
 
-136 
+144 
 	`mem£t
 (
 ·th
 ,0,(path));
 
-138 ià(
+146 ià(
 	`d‘eù_¡Üage
 (
 usb_¡Üage
@@ -1609,7 +1625,7 @@ usb_¡Üage
 dœ
 ) > 0)
 
-140 
+148 
 	`¥rštf
 (
 ·th
@@ -1619,7 +1635,7 @@ usb_¡Üage
 dœ
 );
 
-141 
+149 
 usb_num
  = 
 	`sÿn_fe
@@ -1627,9 +1643,7 @@ usb_num
 ·th
 ,0);
 
-144 
-dig™®
- = 
+152  
 	`MAXNO
 (
 sd_num
@@ -1637,99 +1651,89 @@ sd_num
 usb_num
 );
 
-145  
-dig™®
-;
-
-146 
+153 
 	}
 }
 
-148 
+155 
 	$check_dig™®
 (*
 fe_dœ
+,*
+¡Üage_·th
 )
 
-150 
-g¬bage
-;
-
-151 
+157 
 now_time
  = 
 	`time_numb”
 ();
 
-152 if(
+161 iàĞ
+check_time
+ =ğ0 || check_tim!ğ
+now_time
+ || 
+	`¡rcmp
+(
+¡Üage_·th
+,
+Üigš
+))
+
+163 
 dig™®
- <= 0 ){
-
-153 #ià
-DEBUG
-
-
-154 
-	`´štf
-("Digital fail!!\n");
-
-156 
-g¬bage
  = 
+	`MAXNO
+(
 	`fšd_dig™®
 (
 fe_dœ
-);
+),digital);
 
-159 ià(
-check_time
- !ğ
-now_time
- )
-
-161 
+164 
 check_time
  = 
 now_time
 ;
 
-162  
+165  
 dig™®
 ++;
 
-164  
+167  
 dig™®
 ;
 
-166 
+169 
 	}
 }
 
-168 
+171 
 	$ü—‹_dœ
 (*
 ·th
 )
 
-170 if(
+173 if(
 	`mkdœ
 (
 ·th
 ,0777) == -1)
 
-172 #ià
+175 #ià
 DEBUG
 
 
-173 
+176 
 	`´štf
 ("Mkdir fail!!\n");
 
-178 
+181 
 	}
 }
 
-180 
+183 
 	$check_dœ
 (*
 ¡Üage_·th
@@ -1737,15 +1741,15 @@ DEBUG
 fe_dœ
 )
 
-182 
+185 
 fe_·th
-[1024];
+[1024]={0};
 
-183 
+186 
 »suÉ
  = 0;
 
-185 
+188 
 	`¥rštf
 (
 fe_·th
@@ -1755,23 +1759,23 @@ fe_·th
 fe_dœ
 );
 
-187 #ifdeà
+190 #ifdeà
 DEBUG
 
 
-188 
+191 
 	`´štf
 ("check dœ [ % ]\n",
 fe_·th
 );
 
-191 ià(
+194 ià(
 	`d‘eù_¡Üage
 (
 fe_·th
 )){
 
-194 
+197 
 »suÉ
  = 
 	`ü—‹_dœ
@@ -1779,15 +1783,15 @@ fe_·th
 fe_·th
 );
 
-195  
+198  
 »suÉ
 ;
 
-198 
+201 
 	}
 }
 
-200 
+203 
 	$§ve_fe
 (*
 fe
@@ -1797,147 +1801,93 @@ fe
 dœ
 )
 
-202 *
+205 *
 ¡Üage
  = 
 	`m®loc
 (1024);
 
-203 
+206 
 fe_·th
 [1024]={0};
 
-204 
+207 
 FILE
  *
 å
+ = 
+NULL
 ;
 
-205 
+208 
 g¬bage
 ,
 fe_num
 ;
 
-206 *
+209 
 ·th
 [
 NAME_LEN
-];
+] = {0};
 
-208 #ià
+211 #ià
 DEBUG
 
 
-209 
+212 
 	`´štf
 ("Enter file mode!!\n");
 
-212 ià(
+215 ià(
 Ën
  <= 0 )
 
-214 #ià
+217 #ià
 DEBUG
 
 
-215 
+218 
 	`´štf
 ("Data Error !!\n");
 
-217 
+220 
 	`ä“
 (
 ¡Üage
 );
 
-220 
+223 
 	`mem£t
 (
 ¡Üage
 , 0, (storage));
 
-221 iàĞ
-sd_’abË
- && 
-	`d‘eù_¡Üage
-(
-sd_¡Üage
-è&& (
-	`check_size
-(sd_¡Üageè< 95 || 
-»cÜd
-)){
-
-222 #ià
-DEBUG
-
-
-223 
-	`´štf
-("Detect SD!!\n");
-
-225 if(
-	`check_size
-(
-sd_¡Üage
-è>ğ95 && 
-»cÜd
- )
-
-227 
-	`¥rštf
-(
-·th
-,"%s/%s",
-sd_¡Üage
-,
-dœ
-);
-
-228 
-	`sÿn_fe
-(
-·th
-,1);
-
-230 
-	`¡rıy
-(
-¡Üage
- , 
-sd_¡Üage
- );
-
-231 }iàĞ
+224 iàĞ
 usb_’abË
  && 
 	`d‘eù_¡Üage
 (
 usb_¡Üage
-è&& (
-	`check_size
-(usb_¡Üageè< 95 || 
-»cÜd
 )){
 
-232 #ià
+225 #ià
 DEBUG
 
 
-233 
+226 
 	`´štf
 ("Detect USB!!\n");
 
-235 if(
+228 if(
+»cÜd
+ =ğ1 && 
 	`check_size
 (
 usb_¡Üage
-è>ğ95 && 
-»cÜd
- )
+) >= 94)
 
-237 
+230 
 	`¥rštf
 (
 ·th
@@ -1947,13 +1897,13 @@ usb_¡Üage
 dœ
 );
 
-238 
+231 
 	`sÿn_fe
 (
 ·th
 ,1);
 
-240 
+232 
 	`¡rıy
 (
 ¡Üage
@@ -1961,21 +1911,197 @@ dœ
 usb_¡Üage
  );
 
-243 #ià
+233 
+	`¡rıy
+(
+Üigš
+ , 
+usb_¡Üage
+ );
+
+236 ià(
+	`check_size
+(
+usb_¡Üage
+) >= 95){
+
+237 if(
+usb_size
+ == 0)
+
+239 
+	`sy¡em
+("/bin/sh /etc/init.d/send_mail USB Size_over");
+
+240 
+usb_size
+ = 1;
+
+243 if(
+usb_size
+ == 1)
+
+245 
+	`sy¡em
+("nvram„eplace‡ttr‡lert_rule 0 usb 0");
+
+246 
+usb_size
+ = 0;
+
+250 ià(
+»cÜd
+ =ğ1 || 
+	`check_size
+(
+usb_¡Üage
+) < 95)
+
+252 
+	`¡rıy
+(
+¡Üage
+ , 
+usb_¡Üage
+ );
+
+253 
+	`¡rıy
+(
+Üigš
+ , 
+usb_¡Üage
+ );
+
+256 iàĞ
+sd_’abË
+ && 
+	`d‘eù_¡Üage
+(
+sd_¡Üage
+) ){
+
+257 #ià
 DEBUG
 
 
-244 
+258 
+	`´štf
+("Detect SD!!\n");
+
+260 if(
+»cÜd
+ =ğ1 && 
+	`check_size
+(
+sd_¡Üage
+) >= 94)
+
+262 
+	`¥rštf
+(
+·th
+,"%s/%s",
+sd_¡Üage
+,
+dœ
+);
+
+263 
+	`sÿn_fe
+(
+·th
+,1);
+
+264 
+	`¡rıy
+(
+¡Üage
+ , 
+sd_¡Üage
+ );
+
+265 
+	`¡rıy
+(
+Üigš
+ , 
+sd_¡Üage
+ );
+
+268 ià(
+	`check_size
+(
+sd_¡Üage
+) >= 95){
+
+269 if(
+sd_size
+ == 0)
+
+271 
+	`sy¡em
+("/bin/sh /etc/init.d/send_mail SD Size_over");
+
+272 
+sd_size
+ = 1;
+
+275 if(
+sd_size
+ == 1)
+
+277 
+	`sy¡em
+("nvram„eplace‡ttr‡lert_rule 0 sd 0");
+
+278 
+sd_size
+ = 0;
+
+282 ià(
+»cÜd
+ =ğ1 || 
+	`check_size
+(
+sd_¡Üage
+) < 95){
+
+283 
+	`¡rıy
+(
+¡Üage
+ , 
+sd_¡Üage
+ );
+
+284 
+	`¡rıy
+(
+Üigš
+ , 
+sd_¡Üage
+ );
+
+287 ià(!
+¡Üage
+)
+
+289 #ià
+DEBUG
+
+
+290 
 	`´štf
 ("NO detect‡ny storage skip file mode!!\n");
 
-246 
+292 
 	`ä“
 (
 ¡Üage
 );
 
-250 
+296 
 	`¥rštf
 (
 fe_·th
@@ -1985,19 +2111,19 @@ fe_·th
 dœ
 ,
 	`check_dig™®
-(dir));
+(dir,storage));
 
-252 #ià
+298 #ià
 DEBUG
 
 
-253 
+299 
 	`´štf
 ("F·th : % !!\n",
 fe_·th
 );
 
-256 
+302 
 å
  = 
 	`fİ’
@@ -2005,25 +2131,25 @@ fe_·th
 fe_·th
 ,"a");
 
-258 if(!
+304 if(!
 å
 ){
 
-259 #ià
+305 #ià
 DEBUG
 
 
-260 
+306 
 	`´štf
 ("Write file fail!!\n");
 
-262 
+308 
 	`ä“
 (
 ¡Üage
 );
 
-265 
+311 
 	`fwr™e
 (
 fe
@@ -2033,19 +2159,19 @@ fe
 å
 );
 
-267 
+313 
 	`fşo£
 (
 å
 );
 
-268 
+314 
 	`ä“
 (
 ¡Üage
 );
 
-269 
+315 
 	}
 }
 
@@ -2103,7 +2229,7 @@ fe
 	ggl__pid
 [
 MAX_USER
-] = {-1};
+] = {-1,-1,-1,-1,-1,-1};
 
 16 
 	g£t_max_u£r
@@ -2229,7 +2355,11 @@ udp_£rv”
 tim”
  = 0;
 
-43 
+43 
+tim”_1
+ = 0;
+
+44 
 udp_u£r
  *
 now
@@ -2237,19 +2367,19 @@ now
 NULL
 ;
 
-44 *
+45 *
 group
  = 
 NULL
 ;
 
-45 
+46 
 fd_£t
  
 fds
 ;
 
-46 
+47 
 FILE
  *
 å
@@ -2257,21 +2387,21 @@ FILE
 NULL
 ;
 
-48 #ifdeà
+49 #ifdeà
 DEBUG
 
 
-49 
+50 
 	`´štf
 ("Start...\n");
 
-52 
+53 
 	`cÚfigu»_š™
 Ğ
 ¬gv
 [1] );
 
-54 
+55 
 £t_max_u£r
  = (
 	`©oi
@@ -2279,25 +2409,25 @@ DEBUG
 	`g‘_cÚf
 ("max_connect")) > 0) ?‡toi(get_conf("max_connect")) : 4;
 
-56 
+57 
 group
  = 
 	`g‘_cÚf
 ("group");
 
-58 
+59 
 deviû
  = 
 	`g‘_cÚf
 ("device");
 
-59 
+60 
 dœ
  = 
 	`g‘_cÚf
 ("alias");
 
-61 
+62 
 sd_’abË
  = 
 	`©oi
@@ -2305,7 +2435,7 @@ sd_’abË
 	`g‘_cÚf
 ("sd"));
 
-62 
+63 
 usb_’abË
  = 
 	`©oi
@@ -2313,7 +2443,7 @@ usb_’abË
 	`g‘_cÚf
 ("usb"));
 
-64 
+65 
 fe_mode
  = 
 	`©oi
@@ -2321,7 +2451,7 @@ fe_mode
 	`g‘_cÚf
 ("file_mode"));
 
-65 
+66 
 mode
  = 
 	`©oi
@@ -2329,7 +2459,7 @@ mode
 	`g‘_cÚf
 ("mode"));
 
-67 
+68 
 »cÜd
  = 
 	`©oi
@@ -2337,7 +2467,7 @@ mode
 	`g‘_cÚf
 ("record"));
 
-69 
+70 
 	`¥rštf
 (
 ·th
@@ -2345,13 +2475,13 @@ mode
 group
  );
 
-70 
+71 
 	`commªd
 (
 ·th
 );
 
-72 
+73 
 	`¥rštf
 (
 ·th
@@ -2361,19 +2491,19 @@ group
 mode
 );
 
-73 
+74 
 	`commªd
 (
 ·th
 );
 
-75 
+76 
 x
  = 1; x <ğ
 £t_max_u£r
 ;x++)
 
-77 
+78 
 	`¥rštf
 (
 ·th
@@ -2383,13 +2513,13 @@ group
 x
  );
 
-78 
+79 
 	`commªd
 (
 ·th
 );
 
-82 
+83 
 cÚ
  = 
 	`İ’_cÚsŞe
@@ -2397,11 +2527,11 @@ cÚ
 deviû
 );
 
-83 ifĞ
+84 ifĞ
 cÚ
  > 0){
 
-84 
+85 
 	`tcg‘©Œ
 (
 cÚ
@@ -2409,17 +2539,29 @@ cÚ
 šfo
 );
 
-85 
+86 
 	`cÚ_£‰šg
 (
 cÚ
 );
 
-87 #ifdeà
+88 ifĞ
+tim”_1
+ > 100)  0;
+
+89 
+	`¦“p
+(1);
+
+90 
+tim”_1
+++;
+
+91 #ifdeà
 DEBUG
 
 
-88 
+92 
 	`´štf
 ("CÚsŞPÜt[ %d ]†ockšg.. Wa™tšg... \n",
 	`©oi
@@ -2427,23 +2569,23 @@ DEBUG
 	`g‘_cÚf
 ("local_tcp_port")));
 
-91 }
+95 }
 cÚ
  <= 0);
 
-93 
+97 
 mode
 ){
 
-95 #ifdeà
+99 #ifdeà
 DEBUG
 
 
-96 
+100 
 	`´štf
 ("Mode : TCP Server !!\n");
 
-98 
+102 
 £rv”
  = 
 	`İ’_£rv”
@@ -2453,45 +2595,45 @@ DEBUG
 	`g‘_cÚf
 ("local_tcp_port")));
 
-101 #ifdeà
+105 #ifdeà
 DEBUG
 
 
-102 
+106 
 	`´štf
 ("Mode : TCP Client !!\n");
 
-103 
+107 
 	`´štf
 ("Start Open socket !!\n");
 
-105 
+109 
 	`cÚÃù_to_£rv”
 ();
 
-106 #ifdeà
+110 #ifdeà
 DEBUG
 
 
-107 
+111 
 	`´štf
 ("Open socket End!!\n");
 
-111 #ifdeà
+115 #ifdeà
 DEBUG
 
 
-112 
+116 
 	`´štf
 ("Mode : UDP Mode!!\n");
 
-114 
+118 
 gl__pid
 [0] = 
 	`İ’_udp_ş›Á
 ();
 
-115 
+119 
 udp_£rv”
  = 
 	`İ’_udp_£rv”
@@ -2501,29 +2643,29 @@ udp_£rv”
 	`g‘_cÚf
 ("local_listen_port")));
 
-118 #ifdeà
+122 #ifdeà
 DEBUG
 
 
-119 
+123 
 	`´štf
 ("Mode : ERROR !!\n");
 
-124 #ifdeà
+128 #ifdeà
 DEBUG
 
 
-125 
+129 
 	`´štf
 ("Start Loop...\n");
 
-128 
+132 
 x
  = 1; x <ğ
 £t_max_u£r
 ;x++)
 
-130 
+134 
 	`¥rštf
 (
 ·th
@@ -2533,31 +2675,31 @@ group
 x
  );
 
-131 
+135 
 	`commªd
 (
 ·th
 );
 
-134 
+138 
 	`th»ad_š™
 ();
 
-138 
+142 
 	`FD_ZERO
 (&
 fds
 );
 
-139 
+143 
 maxfd
  = 0;
 
-140 
+144 
 chªge
  = 0;
 
-141 
+145 
 	`FD_SET
 (
 cÚ
@@ -2565,7 +2707,7 @@ cÚ
 fds
 );
 
-142 
+146 
 maxfd
  = 
 	`MAXNO
@@ -2573,11 +2715,11 @@ maxfd
 cÚ
 , maxfd);
 
-144 ifĞ
+148 ifĞ
 udp_£rv”
  > 0)
 
-146 
+150 
 	`FD_SET
 (
 udp_£rv”
@@ -2585,7 +2727,7 @@ udp_£rv”
 fds
 );
 
-147 
+151 
 maxfd
  = 
 	`MAXNO
@@ -2593,11 +2735,11 @@ maxfd
 udp_£rv”
 , maxfd);
 
-150 ifĞ
+154 ifĞ
 £rv”
  > 0 ){
 
-151 
+155 
 	`FD_SET
 (
 £rv”
@@ -2605,7 +2747,7 @@ udp_£rv”
 fds
 );
 
-152 
+156 
 maxfd
  = 
 	`MAXNO
@@ -2613,19 +2755,19 @@ maxfd
 £rv”
 , maxfd);
 
-153 
+157 
 y
  = 0; y <ğ
 £t_max_u£r
 ;y++ )
 
-155 ifĞ
+159 ifĞ
 gl__pid
 [
 y
 ] <= 0 ) ;
 
-156 if(!
+160 if(!
 	`sock‘_check
 (
 gl__pid
@@ -2633,15 +2775,15 @@ gl__pid
 y
 ]))
 
-158 
+162 
 chªge
  = 1;
 
-159 #ifdeà
+163 #ifdeà
 DEBUG
 
 
-160 
+164 
 	`´štf
 ("U£¸: %d [ %d ] DiscÚÃù !!\n",
 y
@@ -2649,7 +2791,7 @@ y
 gl__pid
 [y]);
 
-162 
+166 
 	`şo£
 (
 gl__pid
@@ -2657,7 +2799,7 @@ gl__pid
 y
 ]);
 
-163 
+167 
 	`¥rštf
 (
 ·th
@@ -2666,26 +2808,26 @@ group
 ,
 ISP
 [
-u£r
+y
 ]);
 
-164 
+168 
 	`commªd
 (
 ·th
 );
 
-165 
+169 
 gl__pid
 [
 y
 ] = -1;
 
-166 
+170 
 u£r
 --;
 
-169 
+173 
 	`FD_SET
 Ğ
 gl__pid
@@ -2695,7 +2837,7 @@ y
 fds
 );
 
-170 
+174 
 maxfd
  = 
 	`MAXNO
@@ -2705,15 +2847,7 @@ gl__pid
 y
 ] , maxfd);
 
-174 ifĞ
-mode
- !ğ2 && 
-chªge
- )
-	`u£r_d–
-();
-
-176 if(!
+180 if(!
 	`£Ëù
 (
 maxfd
@@ -2723,7 +2857,7 @@ fds
 NULL
 , NULL, NULL)) ;
 
-178 if(
+182 if(
 	`FD_ISSET
 (
 cÚ
@@ -2731,13 +2865,13 @@ cÚ
 fds
 )) {
 
-179 
+183 
 	`mem£t
 (
 buf
 ,0,(buf));
 
-180 
+184 
 Ën
  = 
 	`»ad
@@ -2747,69 +2881,51 @@ cÚ
 buf
 , (buf));
 
-181 
+185 
 buf
 [
 Ën
 ] = 0;
 
-182 ià(
+186 ià(
 Ën
  <= 0)
 
-184 
+188 
 couÁ
 ++;
 
-185 
+189 if(
+Rx
+ > (1024 * 1024 * 1024 * 4)) Rx = 0;
+
+190 
 Rx
 +=
 Ën
 ;
 
-187 if(
-Ën
- > (1024 * 500000))†en = 0;
-
-188 
+193 
 	`¥rštf
 (
 ·th
-,"/tmp/%s-Rx",
+,"echØ%d > /tmp/%s-Rx",
+Rx
+,
 dœ
-);
+ );
 
-189 
-å
- = 
-	`fİ’
+194 
+	`commªd
 (
 ·th
-,"w");
-
-190 ià(
-å
-){
-
-191 
-	`årštf
-(
-å
-,"%d",
-Rx
 );
 
-192 
-	`fşo£
-(
-å
-);
-
-202 if(
+196 if(
 fe_mode
  > 0)
 
-203 
+197 
 	`§ve_fe
 (
 buf
@@ -2819,11 +2935,11 @@ buf
 dœ
 );
 
-205 if(
+199 if(
 mode
  == 2)
 
-207 
+201 
 i
  = 
 gl__addr
@@ -2835,7 +2951,7 @@ gl_pÜt
 NULL
  &&…[0] != NULL; *i++,*p++){
 
-208 
+202 
 	`£nd_udp
 (
 buf
@@ -2851,23 +2967,23 @@ p
 gl__pid
 [0]);
 
-210 ifĞ
+204 ifĞ
 udp_£rv”
  > 0 ){
 
-211 
+205 
 now
  = 
 udp
 ;
 
-212 
+206 
 now
  !ğ
 NULL
 ){
 
-213 
+207 
 	`£nd_udp
 (
 buf
@@ -2881,41 +2997,41 @@ pÜt
 udp_£rv”
 );
 
-214 
+208 
 now
  =‚ow->
 Ãxt
 ;
 
-218 if(
+212 if(
 mode
  =ğ1 && 
 tim”
  > 10000)
 
-220 ià(
+214 ià(
 	`cÚÃù_to_£rv”_agaš
 () != 0)
 
-222 #ifdeà
+216 #ifdeà
 DEBUG
 
 
-223 
+217 
 	`´štf
 ("Thread createƒrror!!\n");
 
-227 
+221 
 tim”
  = 0;
 
-230 
+224 
 	`±h»ad_mu‹x_lock
 (&
 mu‹x
 );
 
-231 
+225 
 	`wr™e_d©a
 (
 buf
@@ -2923,21 +3039,21 @@ buf
 Ën
 );
 
-232 
+226 
 	`±h»ad_mu‹x_uÆock
 (&
 mu‹x
 );
 
-233 
+227 
 tim”
 ++;
 
-237 if(
+231 if(
 udp_£rv”
  > 0)
 
-239 if(
+233 if(
 	`FD_ISSET
 (
 udp_£rv”
@@ -2945,17 +3061,17 @@ udp_£rv”
 fds
 )){
 
-240 
+234 
 	`assign_u£r
 (
 udp_£rv”
 );}
 
-243 if(
+237 if(
 £rv”
  > 0)
 
-245 if(
+239 if(
 	`FD_ISSET
 (
 £rv”
@@ -2963,25 +3079,25 @@ udp_£rv”
 fds
 ))
 
-246 
+240 
 	`u£r_cÚÃù
 (
 £rv”
 );
 
-247 
+241 
 y
  = 0; y <ğ
 £t_max_u£r
 ;y++ )
 
-249 ifĞ
+243 ifĞ
 gl__pid
 [
 y
 ] <= 0 ) ;
 
-250 if(
+244 if(
 	`FD_ISSET
 (
 gl__pid
@@ -2991,7 +3107,7 @@ y
 fds
 ))
 
-251 
+245 
 	`fÜw¬dšg
 (
 cÚ
@@ -3001,7 +3117,7 @@ gl__pid
 y
 ]);
 
-256 
+250 
 	`cÚ_şo£
 (
 cÚ
@@ -3009,15 +3125,15 @@ cÚ
 šfo
 );
 
-257 #ifdeà
+251 #ifdeà
 DEBUG
 
 
-258 
+252 
 	`´štf
 ("Close..");
 
-261 
+255 
 	}
 }
 
@@ -3087,7 +3203,7 @@ g‘_İt_™em
 
 2 
 	#BUF_LEN
- 3096
+ 8192
 
 	)
 
@@ -3961,23 +4077,23 @@ sockfd
 sock
 )
 
-66 if(
+65 if(
 sock
 <=0)
 
-68 
+67 
 tı_šfo
  
 šfo
 ;
 
-69 
+68 
 Ën
  = (
 šfo
 );
 
-70 
+69 
 	`g‘sockİt
 (
 sock
@@ -3993,7 +4109,7 @@ sockËn_t
 Ën
 );
 
-71 if((
+70 if((
 šfo
 .
 tıi_¡©e
@@ -4001,11 +4117,11 @@ tıi_¡©e
 TCP_ESTABLISHED
 )) {
 
-78 
+77 
 	}
 }
 
-80 
+79 
 	$şo£_tı_ş›Á
 (
 x
@@ -4013,33 +4129,33 @@ x
 şifd
 ) {
 
-81 if(
+80 if(
 şifd
  < 1) {
 
-82 #ifdeà
+81 #ifdeà
 DEBUG
 
 
-83 
+82 
 	`´štf
 ("NÙ‡ vŞid cÚÃùiÚ sock‘:%d\n", 
 şifd
 );
 
-87 
+86 
 	`şo£
 (
 şifd
 );
 
-88 
+87 
 cÚnfd
 [
 x
 ] = -1;
 
-90 
+89 
 	}
 }
 
@@ -4127,11 +4243,11 @@ buf
 »s
 ] = 0;
 
-43 
+27 
 	}
 }
 
-45 
+29 
 	$wr™e_d©a
 (*
 d©a
@@ -4139,27 +4255,27 @@ d©a
 Ën
 )
 
-47 
+31 
 x
 ;
 
-48 
+32 
 ·th
 [
 BUF_LEN
 ]={0};
 
-49 *
+33 *
 group
  = 
-	`g‘_cÚf
-("group");
+NULL
+;
 
-52 if(!
+35 if(!
 Ën
  ||†en == 0)
 
-53 
+36 
 Ën
  = 
 	`¡¾’
@@ -4167,19 +4283,25 @@ group
 d©a
 );
 
-54 
+38 
+group
+=
+	`g‘_cÚf
+("group");
+
+40 
 x
  = 0; x <ğ
 £t_max_u£r
 ;x++){
 
-55 if(
+41 if(
 gl__pid
 [
 x
 ] <= 0);
 
-56 if(!
+42 if(!
 	`sock‘_check
 (
 gl__pid
@@ -4187,11 +4309,11 @@ gl__pid
 x
 ]))
 
-58 #ifdeà
+44 #ifdeà
 DEBUG
 
 
-59 
+45 
 	`´štf
 ("U£¸: %d [ %d ] DiscÚÃù !!\n",
 x
@@ -4199,7 +4321,7 @@ x
 gl__pid
 [x]);
 
-61 
+47 
 	`şo£
 (
 gl__pid
@@ -4207,13 +4329,13 @@ gl__pid
 x
 ]);
 
-62 
+48 
 gl__pid
 [
 x
 ] = -1;
 
-63 
+49 
 	`¥rštf
 (
 ·th
@@ -4225,17 +4347,17 @@ ISP
 u£r
 ]);
 
-64 
+50 
 	`commªd
 (
 ·th
 );
 
-65 
+51 
 u£r
 --;
 
-68 
+54 
 	`wr™e
 (
 gl__pid
@@ -4247,7 +4369,7 @@ d©a
 Ën
 );
 
-71 
+57 
 	}
 }
 
@@ -4291,7 +4413,7 @@ d©a
 
 14 cÚ¡ *
 	gISP
-[]={"","isp1","isp2","isp3","isp4"};
+[]={"isp1","isp2","isp3","isp4"};
 
 16 
 	$İ’_£rv”
@@ -4309,7 +4431,7 @@ sockaddr_š
 buf
 [
 BUF_LEN
-];
+] = {0};
 
 22 
 £rv”_pid
@@ -4533,17 +4655,17 @@ x
 tmp
 ;
 
-97 
+96 
 	}
 }
 
-99 
+98 
 	$u£r_cÚÃù
  (
 £rv”
 )
 
-101 
+100 
 addr_Ën
  = (
 sockaddr_š
@@ -4551,31 +4673,37 @@ sockaddr_š
 check
 ;
 
-103 
+102 
 sockaddr_š
  
 ÿddr
 ;
 
-105 *
+104 *
+group
+ = 
+NULL
+;
+
+106 
+·th
+[1024]={0};
+
+107 
+y
+ = 0,
+x
+ = 0;
+
+109 
 group
  = 
 	`g‘_cÚf
 ("group");
 
-107 
-·th
-[1024]={0};
-
-109 
-u£r
-++;
-
 110 
-gl__pid
-[
-u£r
-] = 
+x
+ = 
 	`acû±
 Ğ
 £rv”
@@ -4595,21 +4723,53 @@ addr_Ën
 ÿddr
 .
 sš_addr
-),"0.0.0.0")){
+),"0.0.0.0")){;
 u£r
 --;;}
 
-112 ifĞ
+113 
+y
+ = 0; y < 
+£t_max_u£r
+;y++ )
+
+115 #ifdeà
+DEBUG
+
+
+116 
+	`´štf
+("Y : %d C : %d\n",
+y
+,
+gl__pid
+[y]);
+
+118 if(
+gl__pid
+[
+y
+] > 0 ) ;
+
+119 
+gl__pid
+[
+y
+] = 
+x
+;
+
+122 ifĞ
 u£r
  > 
 £t_max_u£r
  ){
 
-113 #ifdeà
+123 #ifdeà
 DEBUG
 
 
-114 
+124 
 	`´štf
 ("Add U” ç !!\nU£¸Numb” : %d Max U£¸: %d\n",
 u£r
@@ -4617,55 +4777,37 @@ u£r
 £t_max_u£r
 );
 
-116 
+126 
 	`wr™e
 Ğ
 gl__pid
 [
-u£r
+y
 ] , 
 ”rÜ_max_u£r
  , 
 	`¡¾’
 (error_max_user));
 
-117 
+127 
 	`şo£
 (
 gl__pid
 [
-u£r
+y
 ]);
 
-118 
+128 
 gl__pid
 [
-u£r
+y
 ] = -1;
 
-120 
-	`¥rštf
-(
-·th
-,"nv¿m„•Ïû‡‰¸®s_¡©us_ruË % % 1",
-group
-,
-ISP
-[
-u£r
-]);
-
-121 
-	`commªd
-(
-·th
-);
-
-122 
+132 
 u£r
 --;
 
-124 
+134 
 	`¥rštf
 (
 ·th
@@ -4674,7 +4816,7 @@ group
 ,
 ISP
 [
-u£r
+y
 ], 
 	`š‘_Áß
 (
@@ -4683,20 +4825,26 @@ u£r
 sš_addr
 ));
 
-125 
+135 
+	`´štf
+("%s\n",
+·th
+);
+
+136 
 	`commªd
 (
 ·th
 );
 
-126 #ifdeà
+137 #ifdeà
 DEBUG
 
 
-127 
+138 
 	`´štf
 ("U£¸: %d cÂeù from : % : %d…id : %d\n",
-u£r
+y
 ,
 	`š‘_Áß
 (
@@ -4709,9 +4857,11 @@ sš_addr
 sš_pÜt
 ),
 gl__pid
-[user]);
+[
+u£r
+]);
 
-131 
+142 
 	}
 }
 
@@ -5551,6 +5701,8 @@ fd
 
 111 *
 d©a
+ = 
+NULL
 ;
 
 113 
@@ -5881,7 +6033,7 @@ cÚsŞe
 buf
 [
 BUF_LEN
-];
+] = {0};
 
 198 
 	`mem£t
@@ -5899,7 +6051,7 @@ buf
 buf
 , (buf), 0 );
 
-201 
+200 
 	`wr™e
 (
 cÚsŞe
@@ -5909,11 +6061,11 @@ buf
 Ën
 );
 
-202 
+201 
 	}
 }
 
-204 
+203 
 	$»£t_usb
 (
 fd
@@ -5921,17 +6073,17 @@ fd
 deviû
 )
 
-206 
+205 
 rc
 ;
 
-208 
+207 
 	`´štf
 ("Re£‰šg USB deviû %s\n", 
 deviû
 );
 
-210 
+209 
 rc
  = 
 	`ioùl
@@ -5941,19 +6093,19 @@ fd
 USBDEVFS_RESET
 , 0);
 
-211 ià(
+210 ià(
 rc
  < 0) {
 
-212 
+211 
 	`´štf
 ("Error in ioctl\n");
 
-214 
+213 
 	`´štf
 ("Reset Success!!\n");
 
-215 
+214 
 	}
 }
 

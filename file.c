@@ -135,15 +135,13 @@ int find_digital(char *dir)
     int sd_num = 0 , usb_num = 0;
     char path[1024] = {0};
 
-    if (detect_storage(sd_storage) > 0 && check_dir(sd_storage,dir) > 0)
+    if (detect_storage(sd_storage) > 0 )
     {
        sprintf(path,"%s/%s",sd_storage,dir); 
        sd_num = scan_file(path,0);
     }
 
-    memset(path,0,sizeof(path));
-
-    if (detect_storage(usb_storage) > 0 && check_dir(usb_storage,dir) > 0)
+    if (detect_storage(usb_storage) > 0 )
     {
        sprintf(path,"%s/%s",usb_storage,dir); 
        usb_num = scan_file(path,0);
@@ -155,8 +153,6 @@ int find_digital(char *dir)
 int check_digital(char *file_dir,char *storage_path)
 {
     int now_time = time_number();
-
-    //digital = MAXNO(find_digital(file_dir),digital);
 
     if ( check_time == 0 || check_time != now_time || strcmp(storage_path,origin))
     {
@@ -191,12 +187,13 @@ int check_dir(char *storage_path,char *file_dir)
     printf("check dir [ %s ]\n",file_path);
 #endif
 
-    if (detect_storage(file_path)){
-        return 1;
-    }else{
+    //if (detect_storage(file_path)){
+    //    return 1;
+    //}else{
         result = create_dir(file_path);
-        return result;
-    }
+    //    return result;
+    //}
+    return 1;
     
 }
 
@@ -292,7 +289,17 @@ void save_file(char *file, int len, char *dir)
         free(storage);
         return;
     }
-    
+/*
+    if (!check_dir(storage,dir))
+    {
+#if DEBUG
+    printf("%s don't exist skip file mode!!\n",dir);
+#endif       
+        free(storage);
+        return;
+    }
+*/
+    check_dir(storage,dir);
     sprintf(file_path,"%s/%s/%010d.txt",storage,dir,check_digital(dir,storage));
 
 #if DEBUG

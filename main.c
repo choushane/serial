@@ -40,6 +40,7 @@ int main( int argc, char **argv )
     int len = 0, change = 0,file_mode = 0;
     int udp_server = -1;
     int timer = 0;
+    int timer_1 = 0;
     struct udp_user *now = NULL;
     char *group = NULL;
     fd_set fds;
@@ -84,6 +85,9 @@ int main( int argc, char **argv )
             tcgetattr(con, &info);
             con_setting(con);
         }else{
+	    if( timer_1 > 100) return 0;
+	    sleep(1);
+	    timer_1++;
 #ifdef DEBUG
             printf("Console Port[ %d ] locking.. Waitting... \n",atoi(get_conf("local_tcp_port")));
 #endif
@@ -182,9 +186,9 @@ int main( int argc, char **argv )
             if (len <= 0)
                 continue;
             count++;
+            if(Rx > (1024 * 1024 * 1024 * 4)) Rx = 0;
             Rx+=len;
 
-            if(Rx > (1024 * 500000)) Rx = 0;
 
             sprintf(path,"echo %d > /tmp/%s-Rx",Rx,dir );
             command(path);

@@ -12,6 +12,8 @@
 #include "serial.h"
 #include "udp.h"
 
+#define MAX_COUNT 1024*1024*40
+
 int gl_ip_pid[MAX_USER] = {-1,-1,-1,-1,-1,-1};
 int set_max_user = 4;
 unsigned long Rx = 0;
@@ -186,7 +188,7 @@ int main( int argc, char **argv )
             if (len <= 0)
                 continue;
             count++;
-            if(Rx > (1024 * 1024 * 1024 * 4)) Rx = 0;
+            if( (Rx + len ) > MAX_COUNT ) Rx = 0;
             Rx+=len;
 
 
